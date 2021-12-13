@@ -2,7 +2,7 @@
 a ransomware made in the bgt (blastbay game toolkit) programming language
 # disclamer
 
-This program has been developed for educational purposes only, in order to explain the basic principles of a simple ransomware as well as for detailing how social engineering can be used in order to facilitate infection. The author shouldn't be held responsible for any damage arising, directly or indirectly, from running this program or interacting with it in any way, including copying, examining the source, incorporating it in other programs, etc.
+This program has been developed for educational purposes only, in order to explain the basic principles of a simple ransomware as well as for detailing how social engineering can be used in order to facilitate infection. The author or publisher of this program shouldn't be held responsible for any damage arising, directly or indirectly, from running this program or interacting with it in any way, including copying, examining the source, incorporating it in other programs, etc.
 
 # motivation
 
